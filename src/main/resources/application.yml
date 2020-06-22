@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:h2:~/data/kyungCoupon
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+jwt:
+  secretKey: 1234567890
