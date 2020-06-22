@@ -4,6 +4,8 @@ import kyungCoupon.domain.Coupon;
 import kyungCoupon.domain.CouponRepository;
 import kyungCoupon.domain.User;
 import kyungCoupon.domain.UserRepository;
+import kyungCoupon.domain.network.Enums;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.exception.AuthenticationException;
 import kyungCoupon.exception.CouponNotExistsException;
 import kyungCoupon.util.OftenUsedFunction;
@@ -31,7 +33,7 @@ public class CnclUseCouponService {
      * @Param String couponNum
      * @return void
      * */
-    public Coupon cnclUseCoupon(String couponNum, Long userId) {
+    public Header<Coupon> cnclUseCoupon(String couponNum, Long userId) {
 
         if(couponNum.isEmpty()){
             throw new CouponNotExistsException();
@@ -68,6 +70,11 @@ public class CnclUseCouponService {
         coupon.setCnclYN("Y");
         coupon.setCnclDate(OftenUsedFunction.getTodayDate());
         coupon.setUser(user);
-        return couponRepository.save(coupon);
+        try {
+            couponRepository.save(coupon);
+        }catch (Exception e){
+            return Header.response(coupon, Enums.SYSTEM_ERROR.getId(), "취소처리 저장 중 에러발생했습니다." );
+        }
+        return Header.response(coupon, Enums.SUCCESS.getId(), Enums.SUCCESS.getDescription());
     }
 }

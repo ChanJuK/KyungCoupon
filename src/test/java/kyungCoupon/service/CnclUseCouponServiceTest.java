@@ -4,18 +4,14 @@ import kyungCoupon.domain.Coupon;
 import kyungCoupon.domain.CouponRepository;
 import kyungCoupon.domain.User;
 import kyungCoupon.domain.UserRepository;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.exception.CouponNotExistsException;
-import kyungCoupon.util.OftenUsedFunction;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import java.util.Optional;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -67,7 +63,7 @@ public class CnclUseCouponServiceTest {
                 .build();
         given(userRepository.findById(1L)).willReturn(Optional.of(user));
         given(couponRepository.findByCouponNum(couponNum)).willReturn(Optional.of(coupon));
-        Coupon rstCoupon = cnclUseCouponService.cnclUseCoupon(couponNum,1L);
+        Header<Coupon> couponHeader= cnclUseCouponService.cnclUseCoupon(couponNum,1L);
 
 
         verify(couponRepository).save(any());

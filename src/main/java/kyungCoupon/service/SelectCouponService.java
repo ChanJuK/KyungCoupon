@@ -4,11 +4,12 @@ import kyungCoupon.domain.Coupon;
 import kyungCoupon.domain.CouponRepository;
 import kyungCoupon.domain.User;
 import kyungCoupon.domain.UserRepository;
+import kyungCoupon.domain.network.Enums;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.exception.AuthenticationException;
 import kyungCoupon.util.OftenUsedFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -27,9 +28,10 @@ public class SelectCouponService {
      * @param void
      * @return List<Coupon>
      */
-    public List<Coupon> getCouponExpiredToday() {
+    public Header<Coupon> getCouponExpiredToday() {
 
-        return couponRepository.findByExpDate(OftenUsedFunction.getTodayDate());
+        List<Coupon> couponList = couponRepository.findByExpDate(OftenUsedFunction.getTodayDate());
+        return Header.response(couponList, Enums.SUCCESS.getId(), Enums.SUCCESS.getDescription());
 
     }
 
@@ -39,7 +41,7 @@ public class SelectCouponService {
      * @param void
      * @return List<Coupon>
      */
-    public List<Coupon> getMyCouponInfo(Long userId) {
+    public Header<Coupon> getMyCouponInfo(Long userId) {
 
         //기존에 가입한 회원인지 검증
         User user = userRepository.findById(userId).orElse(null);
@@ -50,7 +52,7 @@ public class SelectCouponService {
         //쿠폰받은 조회
         List<Coupon> coupon = couponRepository.findByUserId(userId);
 
-        return coupon;
+        return Header.response(coupon, Enums.SUCCESS.getId(), Enums.SUCCESS.getDescription());
 
     }
 }

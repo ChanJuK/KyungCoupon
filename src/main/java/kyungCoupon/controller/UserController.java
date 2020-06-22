@@ -3,17 +3,16 @@ package kyungCoupon.controller;
 import kyungCoupon.domain.SessionRequestDTO;
 import kyungCoupon.domain.SessionResponseDTO;
 import kyungCoupon.domain.User;
+import kyungCoupon.domain.network.Enums;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.service.LogInService;
 import kyungCoupon.service.SignInService;
 import kyungCoupon.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 @RestController
@@ -34,11 +33,9 @@ public class UserController {
     http POST localhost:8080/signIn email=test@gmail.com password=test userName=test
     * */
     @PostMapping("/signIn")
-    public ResponseEntity<?> signIn(@Valid @RequestBody User input) throws URISyntaxException {
+    public Header<?> signIn(@Valid @RequestBody User input) throws URISyntaxException {
 
-        signInService.signIn(input);
-        URI uri = new URI("/signIn");
-        return ResponseEntity.created(uri).body("{정상 가입했습니다.}");
+        return signInService.signIn(input);
     }
 
 
@@ -49,7 +46,7 @@ public class UserController {
     http POST localhost:8080/logIn email=test@gmail.com password=test
      * */
     @PostMapping("/logIn")
-    public ResponseEntity<?> logIn(@Valid @RequestBody SessionRequestDTO input) throws URISyntaxException {
+    public Header<SessionResponseDTO> logIn(@Valid @RequestBody SessionRequestDTO input) throws URISyntaxException {
 
         User user = logInService.authenticate(input.getEmail(), input.getPassword());
 
@@ -58,9 +55,7 @@ public class UserController {
         SessionResponseDTO sessionResponseDTO = SessionResponseDTO.builder()
                 .accessToken(token)
                 .build();
-
-        URI uri = new URI("/logIn");
-        return ResponseEntity.created(uri).body(sessionResponseDTO);
+        return Header.response(sessionResponseDTO, Enums.SUCCESS.getId(), user.getUserName()+"님, 환영합니다.");
     }
 
 }

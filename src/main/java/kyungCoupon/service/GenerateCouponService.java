@@ -5,7 +5,6 @@ import kyungCoupon.domain.CouponRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.*;
@@ -34,6 +33,7 @@ public class GenerateCouponService {
         BigDecimal generatedCnt = BigDecimal.ZERO;
         Set<Coupon> couponHashSet = new HashSet<Coupon>();
 
+
         //중복제거하기위해 hashset사용
         while (generatedCnt.compareTo(couponCnt) < 0){
             couponHashSet.add(Coupon.builder()
@@ -44,6 +44,7 @@ public class GenerateCouponService {
                     .build());
 
             generatedCnt = BigDecimal.valueOf(couponHashSet.size());//쿠폰번호 생성후 +1, 건수 체크용
+
         }
 
 

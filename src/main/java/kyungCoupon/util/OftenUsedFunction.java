@@ -1,10 +1,5 @@
 package kyungCoupon.util;
 
-import kyungCoupon.domain.CouponRepository;
-import kyungCoupon.domain.User;
-import kyungCoupon.domain.UserRepository;
-import kyungCoupon.exception.AuthenticationException;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +13,7 @@ public class OftenUsedFunction {
     //쿠폰 유효기간 일수 설정값
     //1이면 하루동안 쿠폰이 유효함.
     public static final int VALID_DAY_CNT = 1;
+
 
     /*
     입력한 일자에 date에 + addDay한 일자 구하는 함수

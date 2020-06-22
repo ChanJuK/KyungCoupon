@@ -3,18 +3,17 @@ package kyungCoupon.controller;
 
 import io.jsonwebtoken.Claims;
 import kyungCoupon.domain.Coupon;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.service.*;
 import kyungCoupon.util.OftenUsedFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import javax.naming.AuthenticationException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @RestController
 public class CouponController {
@@ -57,11 +56,10 @@ public class CouponController {
     @output String couponNum
     실행 방법 :
     1. 로그인해서 토큰생성 http POST localhost:8080/logIn email=test@gmail.com password=test
-    2. http PATCH localhost:8080/setCouponUser "Authorization:Bearer
-    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.2P9PEoIhl95IhdhIanfSft9OD-uzvbt3KniNIEvyF4Y"
+    2. http PATCH localhost:8080/setCouponUser "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.7J3tJZ9G1gg0P1nAwBLlC9JbSjrfSGZIfQHqXeRuIrQ"
     * */
     @PatchMapping("/setCouponUser")
-    public String setCouponUser(
+    public Header<String> setCouponUser(
             Authentication authentication) throws AuthenticationException {
         Claims claims = (Claims) authentication.getPrincipal();
 
@@ -74,11 +72,10 @@ public class CouponController {
     @output List<Coupon>
     실행 방법 :
     1. 로그인해서 토큰생성 http POST localhost:8080/logIn email=test@gmail.com password=test
-    2. http GET localhost:8080/getMyCouponInfo "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImlkIjoxMTEsImVtYWlsIjoidGVzdDNAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0MyJ9.5Eq28gYzsF1InsUDS-DS7dfTuBjIG68tSbQ7MBQSFSE"
+    2. http GET localhost:8080/getMyCouponInfo "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.I24WbN0xWoeUa1Xk8rlSC-ZKr4ZXJGxUiIQax2gsoho"
     * */
     @GetMapping("/getMyCouponInfo")
-    public List<Coupon> getMyCouponInfo(
-            Authentication authentication) throws AuthenticationException {
+    public Header<Coupon> getMyCouponInfo(Authentication authentication) throws AuthenticationException {
         Claims claims = (Claims) authentication.getPrincipal();
 
         return selectCouponService.getMyCouponInfo(claims.get("id",Long.class));
@@ -92,10 +89,11 @@ public class CouponController {
     실행 방법:
     1. 로그인해서 토큰생성 http POST localhost:8080/logIn email=test@gmail.com password=test
     2. 어떤 쿠폰을 보유하고있는지 조회 http GET localhost:8080/getMyCouponInfo "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImlkIjoxMTEsImVtYWlsIjoidGVzdDNAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0MyJ9.5Eq28gYzsF1InsUDS-DS7dfTuBjIG68tSbQ7MBQSFSE"
-    3. 조회된 쿠폰번호 복사 후 실행 http PATCH localhost:8080/useCoupon/QhHeP7zIVkccqmd "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.2P9PEoIhl95IhdhIanfSft9OD-uzvbt3KniNIEvyF4Y"
+    3. 조회된 쿠폰번호 복사 후 실행
+    http PATCH localhost:8080/useCoupon/QhHeP7zIVkccqmd "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.89hgDrARgDXVPPkk4ZO2ozfHntk0rColFav8TnLlSto"
      * */
     @PatchMapping("/useCoupon/{couponNum}")
-    public Coupon useCoupon(
+    public Header<Coupon> useCoupon(
             Authentication authentication,
             @PathVariable("couponNum") String couponNum) throws AuthenticationException {
         Claims claims = (Claims) authentication.getPrincipal();
@@ -113,11 +111,11 @@ public class CouponController {
     실행 방법:
     1. 로그인해서 토큰생성 http POST localhost:8080/logIn email=test@gmail.com password=test
     2. 어떤 쿠폰을 보유하고있는지 조회 http GET localhost:8080/getMyCouponInfo "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImlkIjoxMTEsImVtYWlsIjoidGVzdDNAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0MyJ9.5Eq28gYzsF1InsUDS-DS7dfTuBjIG68tSbQ7MBQSFSE"
-    3. 조회된 쿠폰번호 복사 후 실행 http PATCH localhost:8080/cnclUseCoupon/QhHeP7zIVkccqmd "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.2P9PEoIhl95IhdhIanfSft9OD-uzvbt3KniNIEvyF4Y"
-    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImlkIjoxMTEsImVtYWlsIjoidGVzdDNAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0MyJ9.5Eq28gYzsF1InsUDS-DS7dfTuBjIG68tSbQ7MBQSFSE"
+    3. 조회된 쿠폰번호 복사 후 실행
+    http PATCH localhost:8080/cnclUseCoupon/QhHeP7zIVkccqmd "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.fsq5qk5LeLJs1Y9ayWO0XFPfm18KdOkoQfBTgHv68ZI"
     * */
     @PatchMapping("/cnclUseCoupon/{couponNum}")
-    public Coupon cnclUseCoupon(
+    public Header<Coupon> cnclUseCoupon(
             Authentication authentication,
             @PathVariable("couponNum") String couponNum) throws AuthenticationException {
         Claims claims = (Claims) authentication.getPrincipal();
@@ -136,7 +134,7 @@ public class CouponController {
     http GET localhost:8080/getCouponExpiredToday
     * */
     @GetMapping("/getCouponExpiredToday")
-    public List<Coupon> getCouponExpiredToday(){
+    public Header<Coupon> getCouponExpiredToday(){
 
         return selectCouponService.getCouponExpiredToday();
     }

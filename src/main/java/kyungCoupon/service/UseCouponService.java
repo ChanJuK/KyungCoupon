@@ -1,10 +1,11 @@
 package kyungCoupon.service;
 
-import io.jsonwebtoken.Claims;
 import kyungCoupon.domain.Coupon;
 import kyungCoupon.domain.CouponRepository;
 import kyungCoupon.domain.User;
 import kyungCoupon.domain.UserRepository;
+import kyungCoupon.domain.network.Enums;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.exception.AuthenticationException;
 import kyungCoupon.exception.CouponAllUsedException;
 import kyungCoupon.exception.CouponNotExistsException;
@@ -30,7 +31,7 @@ public class UseCouponService {
      * @Param String couponNum
      * @return void
      * */
-    public Coupon useCoupon(String couponNum, Long userId) {
+    public Header<Coupon> useCoupon(String couponNum, Long userId) {
 
         //쿠폰번호가 빈값인지 체크
         if(couponNum.isEmpty()){
@@ -53,7 +54,7 @@ public class UseCouponService {
         String todayStr = OftenUsedFunction.getTodayDate();
         int today = Integer.valueOf(todayStr);
         int expDate = Integer.valueOf(coupon.getExpDate());
-        if(expDate <= today){
+        if(expDate < today){
             throw new CouponNotExistsException(couponNum, coupon.getExpDate());
         }
 
@@ -73,7 +74,13 @@ public class UseCouponService {
         coupon.setCnclYN(null);
         coupon.setCnclDate(null);
         coupon.setUser(user);
-        return couponRepository.save(coupon);
+        try {
+            couponRepository.save(coupon);
+        }catch (Exception e){
+            e.getMessage();
+            return Header.response(Enums.SYSTEM_ERROR.getId(), "취소처리 저장 중 에러발생했습니다." );
+        }
+        return Header.response(coupon, Enums.SUCCESS.getId(), Enums.SUCCESS.getDescription());
 
     }
 }

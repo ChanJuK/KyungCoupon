@@ -4,6 +4,7 @@ import kyungCoupon.domain.Coupon;
 import kyungCoupon.domain.CouponRepository;
 import kyungCoupon.domain.User;
 import kyungCoupon.domain.UserRepository;
+import kyungCoupon.domain.network.Header;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -66,9 +67,9 @@ public class SelectCouponServiceTest {
 
         given(userRepository.findById(user.getId())).willReturn(Optional.of(user));
         given(couponRepository.findByUserId(user.getId())).willReturn(couponList);
-        List<Coupon> couponRst = selectCouponService.getMyCouponInfo(user.getId());
+        Header<Coupon> couponHeader = selectCouponService.getMyCouponInfo(user.getId());
 
-        assertThat(couponRst.get(0).getCouponNum(), is(couponNum));
+        assertThat(couponHeader.getDataList().get(0).getCouponNum(), is(couponNum));
 
     }
 

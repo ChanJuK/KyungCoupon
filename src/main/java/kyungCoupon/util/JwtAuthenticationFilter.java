@@ -1,7 +1,6 @@
 package kyungCoupon.util;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

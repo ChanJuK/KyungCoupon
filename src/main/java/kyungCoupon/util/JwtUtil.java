@@ -1,8 +1,6 @@
 package kyungCoupon.util;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

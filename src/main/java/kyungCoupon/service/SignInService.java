@@ -2,6 +2,8 @@ package kyungCoupon.service;
 
 import kyungCoupon.domain.User;
 import kyungCoupon.domain.UserRepository;
+import kyungCoupon.domain.network.Enums;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.exception.EmailExistsException;
 import kyungCoupon.util.OftenUsedFunction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class SignInService {
     * @Param User input
     * @return void
     * */
-    public User signIn(User input) {
+    public Header<?> signIn(User input) {
 
         //기존에 존재한 이메일인지 검증
         Optional<User> user = userRepository.findByEmail(input.getEmail());
@@ -43,8 +45,13 @@ public class SignInService {
         //비밀번호 암호화 세팅
         String pw = passwordEncoder.encode(input.getPassword());
         input.setPassword(pw);
+        try{
+            userRepository.save(input);
+        }catch (Exception e){
+            return Header.response(Enums.SYSTEM_ERROR.getId(), "가입시 저장 실패했습니다.");
+        }
 
-        return userRepository.save(input);
+        return Header.response(Enums.SUCCESS.getId(), "가입 성공했습니다.");
 
     }
 }

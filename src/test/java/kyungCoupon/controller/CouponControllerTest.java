@@ -1,6 +1,8 @@
 package kyungCoupon.controller;
 
 import kyungCoupon.domain.Coupon;
+import kyungCoupon.domain.network.Enums;
+import kyungCoupon.domain.network.Header;
 import kyungCoupon.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,13 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -60,7 +59,7 @@ public class CouponControllerTest {
                 .build());
 
         given(this.selectCouponService.getCouponExpiredToday())
-                .willReturn(couponList);
+                .willReturn(Header.response(couponList, Enums.SUCCESS.getId(), Enums.SUCCESS.getDescription()));
 
         mvc.perform(get("/getCouponExpiredToday"))
                 .andExpect(status().isOk())

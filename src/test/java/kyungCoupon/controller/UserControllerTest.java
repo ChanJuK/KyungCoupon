@@ -1,9 +1,7 @@
 package kyungCoupon.controller;
 
 import kyungCoupon.domain.User;
-import kyungCoupon.service.GenerateCouponService;
 import kyungCoupon.service.LogInService;
-import kyungCoupon.service.SelectCouponService;
 import kyungCoupon.service.SignInService;
 import kyungCoupon.util.JwtUtil;
 import org.junit.Test;
@@ -14,12 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.net.URI;
-
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -57,7 +51,7 @@ public class UserControllerTest {
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"test@gmail.com\", \"password\":\"test\",\"userName\":\"test\"}"))
-                .andExpect(status().isCreated());
+                .andExpect(status().is2xxSuccessful());
 
     }
 
@@ -81,7 +75,7 @@ public class UserControllerTest {
         mvc.perform(post("/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"test@gmail.com\", \"password\":\"test\"}"))
-                .andExpect(status().isCreated())
+                .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(containsString("{\"accessToken\":\"header.payload.signature\"}")));
 
 
