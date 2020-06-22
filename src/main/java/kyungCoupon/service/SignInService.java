@@ -5,6 +5,7 @@ import kyungCoupon.domain.UserRepository;
 import kyungCoupon.domain.network.Enums;
 import kyungCoupon.domain.network.Header;
 import kyungCoupon.exception.EmailExistsException;
+import kyungCoupon.exception.EmailNotExistsException;
 import kyungCoupon.util.OftenUsedFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,11 @@ public class SignInService {
     * @return void
     * */
     public Header<?> signIn(User input) {
+
+        //입력한 이메일이 패턴 검증
+        if(!OftenUsedFunction.isValidEmailAddress(input.getEmail())){
+            throw new EmailNotExistsException(input.getEmail());
+        }
 
         //기존에 존재한 이메일인지 검증
         Optional<User> user = userRepository.findByEmail(input.getEmail());

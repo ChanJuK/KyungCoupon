@@ -1,6 +1,5 @@
 package kyungCoupon.domain;
 
-import kyungCoupon.domain.network.reqResIO.CouponAPI;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;

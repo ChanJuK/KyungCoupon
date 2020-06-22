@@ -4,6 +4,7 @@ import kyungCoupon.domain.User;
 import kyungCoupon.domain.UserRepository;
 import kyungCoupon.exception.EmailNotExistsException;
 import kyungCoupon.exception.PasswordInvalidException;
+import kyungCoupon.util.OftenUsedFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class LogInService {
      * @return User
      * */
     public User authenticate(String email, String password) {
+
+        //이메일 패턴 검증
+        if(!OftenUsedFunction.isValidEmailAddress(email)){
+            throw new EmailNotExistsException(email);
+        }
 
         //이 이메일 회원가입한 고객인지 검증
         User user = userRepository.findByEmail(email).orElseThrow(

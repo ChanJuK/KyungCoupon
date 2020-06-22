@@ -1,5 +1,7 @@
 package kyungCoupon.util;
 
+import kyungCoupon.exception.EmailNotExistsException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,6 +9,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OftenUsedFunction {
 
@@ -82,5 +86,22 @@ public class OftenUsedFunction {
         return userName;
     }
 
+    /*
+    입력한 이메일 패턴이 유효한지 검증
+    @input String email
+    @output boolean
+    * */
+    public static boolean isValidEmailAddress(String email) {
+        Pattern p = Pattern.compile("^[A-Za-z0-9-]+(\\-[A-Za-z0-9])*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9])");
+        Matcher m = p.matcher(email);
+
+        if (m.find()) {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 
 }

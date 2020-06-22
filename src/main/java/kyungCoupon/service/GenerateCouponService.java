@@ -36,6 +36,7 @@ public class GenerateCouponService {
 
         //중복제거하기위해 hashset사용
         while (generatedCnt.compareTo(couponCnt) < 0){
+
             couponHashSet.add(Coupon.builder()
                     .couponNum(createNumber())//쿠폰번호 생성함수 호출
                     .expDate(expDate) //만료일자

@@ -42,7 +42,7 @@ public class CouponController {
             throws URISyntaxException {
         //1일동안 유효한 쿠폰발급
         String expDate = OftenUsedFunction.getSystemDate(OftenUsedFunction.VALID_DAY_CNT);
-
+        
         int cnt = generateCouponService.generateCouponNum(couponCnt, expDate);
 
         URI uri = new URI("/generateCoupon"+couponCnt);
