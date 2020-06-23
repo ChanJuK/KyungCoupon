@@ -121,37 +121,18 @@ http://commons.apache.org/proper/commons-lang/
 ```
 
 
-### 7. 발급된 쿠폰중 당일 만료된 전체목록조회 API
+### 7. 발급된 쿠폰중 당일 만료3일전 사용자에게 메세지 전송
 - 관련소스 : kyungCoupon.controller.SndMsg3DayBfreExpController.java
-- 기능설명 :
-1. Iterator List에 대상 담기
-2. System.out.print로 전송할 출력
+- 기능설명 : 
+1. 
 - @input : 
 - @output : List<Coupon>
-- 실행명령어 : http GET localhost:8080/getCouponExpiredToday
+- 실행명령어 : http POST localhost:8080/SndMsg3DayBfreExp/20200621
 - 결과 : 
 ```
-{
-    "dataList": [
-        {
-            "cnclDate": null,
-            "cnclYN": null,
-            "couponNum": "FHoS9E7wfC5QUZp",
-            "expDate": "20200623",
-            "id": 20,
-            "useDate": null,
-            "useYN": "N"
-        }
-    ],
-    "dataListSize": 1,
-    "description": "정상처리되었습니다.",
-    "resultCode": "0"
-}
+ㄴㄴㄴㄴㄴ
 ```
-|COUPON_NUM|ID|CNCL_DATE|CNCLYN|EXP_DATE|USE_DATE|USEYN|USER_ID|  
-| --- | --- | --- | --- | --- | --- | --- | --- |
-|FHoS9E7wfC5QUZp|20|null|null|20200623|null|N|null|  
-
+    
 
 
 ## 필수기능 요구사항
