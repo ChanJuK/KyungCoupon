@@ -38,11 +38,12 @@ public class CouponController {
     http POST localhost:8080/generateCoupon/1
     * */
     @PostMapping("/generateCoupon/{couponCnt}")
-    public ResponseEntity<?> generateCoupon(@PathVariable("couponCnt") BigDecimal couponCnt)
+    public ResponseEntity<?> generateCoupon(@PathVariable("couponCnt") int couponCnt)
             throws URISyntaxException {
         //1일동안 유효한 쿠폰발급
         String expDate = OftenUsedFunction.getSystemDate(OftenUsedFunction.VALID_DAY_CNT);
-        
+
+
         int cnt = generateCouponService.generateCouponNum(couponCnt, expDate);
 
         URI uri = new URI("/generateCoupon"+couponCnt);

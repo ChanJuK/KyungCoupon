@@ -42,7 +42,7 @@ public class CouponControllerTest {
 
     @Test
     public void generateCouponNum() throws Exception {
-        mvc.perform(post("/generateCoupon/"+ BigDecimal.ONE)
+        mvc.perform(post("/generateCoupon/"+ 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
 

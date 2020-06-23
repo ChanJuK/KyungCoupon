@@ -5,12 +5,9 @@ import kyungCoupon.domain.CouponRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-@Transactional
 public class GenerateCouponService {
 
 
@@ -28,14 +25,13 @@ public class GenerateCouponService {
      * @param String validDate 유효기간 일자
      * @return 쿠폰 생성 건수
      */
-    public int generateCouponNum(BigDecimal couponCnt, String expDate) {
+    public int generateCouponNum(int couponCnt, String expDate) {
 
-        BigDecimal generatedCnt = BigDecimal.ZERO;
         Set<Coupon> couponHashSet = new HashSet<Coupon>();
 
 
         //중복제거하기위해 hashset사용
-        while (generatedCnt.compareTo(couponCnt) < 0){
+        while (couponHashSet.size() <= couponCnt){
 
             couponHashSet.add(Coupon.builder()
                     .couponNum(createNumber())//쿠폰번호 생성함수 호출
@@ -43,8 +39,6 @@ public class GenerateCouponService {
                     .user(null) //고객 객체
                     .useYN("N") //사용여부
                     .build());
-
-            generatedCnt = BigDecimal.valueOf(couponHashSet.size());//쿠폰번호 생성후 +1, 건수 체크용
 
         }
 
@@ -56,6 +50,9 @@ public class GenerateCouponService {
 
 
     }
+
+
+
 
 
     /*
