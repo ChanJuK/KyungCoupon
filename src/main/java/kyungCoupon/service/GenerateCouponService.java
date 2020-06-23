@@ -31,7 +31,7 @@ public class GenerateCouponService {
 
 
         //중복제거하기위해 hashset사용
-        while (couponHashSet.size() <= couponCnt){
+        while (couponHashSet.size() < couponCnt){
 
             couponHashSet.add(Coupon.builder()
                     .couponNum(createNumber())//쿠폰번호 생성함수 호출

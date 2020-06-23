@@ -57,7 +57,8 @@ public class CouponController {
     @output String couponNum
     실행 방법 :
     1. 로그인해서 토큰생성 http POST localhost:8080/logIn email=test@gmail.com password=test
-    2. http PATCH localhost:8080/setCouponUser "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.7J3tJZ9G1gg0P1nAwBLlC9JbSjrfSGZIfQHqXeRuIrQ"
+    2. http PATCH localhost:8080/setCouponUser "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImlkIjoyMywiZW1haWwiOiJ0ZXN0M0BnbWFpbC5jb20iLCJ1c2VyTmFtZSI6InRlc3QzIn0.RDHXnfz5tHHw5OW27vwvdcLlYmuMUaNzVB2Guryx5tc"
+    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.7J3tJZ9G1gg0P1nAwBLlC9JbSjrfSGZIfQHqXeRuIrQ"
     * */
     @PatchMapping("/setCouponUser")
     public Header<String> setCouponUser(
@@ -113,7 +114,8 @@ public class CouponController {
     1. 로그인해서 토큰생성 http POST localhost:8080/logIn email=test@gmail.com password=test
     2. 어떤 쿠폰을 보유하고있는지 조회 http GET localhost:8080/getMyCouponInfo "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImlkIjoxMTEsImVtYWlsIjoidGVzdDNAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0MyJ9.5Eq28gYzsF1InsUDS-DS7dfTuBjIG68tSbQ7MBQSFSE"
     3. 조회된 쿠폰번호 복사 후 실행
-    http PATCH localhost:8080/cnclUseCoupon/QhHeP7zIVkccqmd "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.fsq5qk5LeLJs1Y9ayWO0XFPfm18KdOkoQfBTgHv68ZI"
+    http PATCH localhost:8080/cnclUseCoupon/jj6a4kdE7QMyqez "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImlkIjoyMywiZW1haWwiOiJ0ZXN0M0BnbWFpbC5jb20iLCJ1c2VyTmFtZSI6InRlc3QzIn0.RDHXnfz5tHHw5OW27vwvdcLlYmuMUaNzVB2Guryx5tc"
+    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWQiOjIxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlck5hbWUiOiJ0ZXN0In0.fsq5qk5LeLJs1Y9ayWO0XFPfm18KdOkoQfBTgHv68ZI"
     * */
     @PatchMapping("/cnclUseCoupon/{couponNum}")
     public Header<Coupon> cnclUseCoupon(

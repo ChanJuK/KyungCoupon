@@ -43,7 +43,7 @@ public class UserController {
     @input SessionRequestDTO input
     @output
     방법 : 가입하때 입력한 아이디와 비밀번호를 입력한다.
-    http POST localhost:8080/logIn email=test@gmail.com password=test
+    http POST localhost:8080/logIn email=test3@gmail.com password=test
      * */
     @PostMapping("/logIn")
     public Header<SessionResponseDTO> logIn(@Valid @RequestBody SessionRequestDTO input) throws URISyntaxException {
