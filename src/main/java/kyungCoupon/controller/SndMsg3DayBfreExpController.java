@@ -23,13 +23,13 @@ public class SndMsg3DayBfreExpController {
     (실제 발송이 아닌 로그에 프린트로 출력함)
     @input String expAftDate N일 이후 만료, 예) expAftDate=3, 3일이후에 만려
     @output N건이 전송되었습니다.
-    http POST localhost:8080/SndMsg3DayBfreExp/1
+    http POST localhost:8080/SndMsg3DayBfreExp/20200621
     * */
     @PostMapping("/SndMsg3DayBfreExp/{excDate}")
     public ResponseEntity<?> SndMsg3DayBfreExp (@PathVariable("excDate") String excDate)
             throws URISyntaxException, ParseException {
 
-        BigDecimal sndCnt = sndMsg3DayBfreExpService.sndMsgToCustomers(excDate);
+        int sndCnt = sndMsg3DayBfreExpService.sndMsgToCustomers(excDate);
 
         URI uri = new URI("/SndMsg3DayBfreExp"+excDate);
         return ResponseEntity.created(uri).body("{"+sndCnt+ "건이 전송되었습니다.}");
