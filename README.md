@@ -124,13 +124,25 @@ http://commons.apache.org/proper/commons-lang/
 ### 7. 발급된 쿠폰중 당일 만료3일전 사용자에게 메세지 전송
 - 관련소스 : kyungCoupon.controller.SndMsg3DayBfreExpController.java
 - 기능설명 : 
-1. 
+1. 사용자가 지정된 쿠폰중 3일전 유효기간인 대상조회
+2. 메시지 세팅
+3.System.out.으로 출력
 - @input : 
 - @output : List<Coupon>
 - 실행명령어 : http POST localhost:8080/SndMsg3DayBfreExp/20200621
 - 결과 : 
 ```
-ㄴㄴㄴㄴㄴ
+{2건이 전송되었습니다.}
+******************* snd email *********************
+To : test@gmail.com
+t**t 고객님, 쿠폰[QhHeP]이 3일 후 만료됩니다.
+From : admin@kyungcoupon.com
+***************************************************
+******************* snd email *********************
+To : test3@gmail.com
+t**t 고객님, 쿠폰[QhHeP]이 3일 후 만료됩니다.
+From : admin@kyungcoupon.com
+***************************************************
 ```
     
 
